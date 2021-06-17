@@ -1,0 +1,10 @@
+:host {
+  margin: 4px;
+  padding: 3px 6px;
+  border: 1px solid #e3f2fd;
+  border-radius: 5px;
+  font-size: 14px;
+  color: black;
+  cursor: pointer;
+  background: #d1d1d185;
+}

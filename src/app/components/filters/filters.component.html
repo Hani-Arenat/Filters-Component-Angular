@@ -1,0 +1,9 @@
+<div class="BodyWrapper">
+  <ng-content select="div"></ng-content>
+  <app-nav-filters
+    style="width: 100%"
+    *ngIf="isFiltersNotEmpty()"
+    [filterOptions]="filterOptions"
+  ></app-nav-filters>
+  <app-applied-filters></app-applied-filters>
+</div>

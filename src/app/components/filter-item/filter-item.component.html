@@ -1,0 +1,8 @@
+<li class="list-item" [ngClass]="{ 'list-item-arrow': filterName === 'color' }">
+  {{ filterName }}
+  <app-filter-popup-options
+    [filterName]="filterName"
+    [filterOptions]="filterOptions"
+    *ngIf="filterName === 'color'"
+  ></app-filter-popup-options>
+</li>

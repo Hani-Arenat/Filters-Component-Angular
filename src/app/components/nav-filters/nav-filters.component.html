@@ -1,0 +1,8 @@
+<ul class="nav-items-wrapper">
+  <app-filter-item
+    *ngFor="let item of filterOptions | keyvalue"
+    [filterName]="item.key"
+    [filterOptions]="item.value"
+  >
+  </app-filter-item>
+</ul>
