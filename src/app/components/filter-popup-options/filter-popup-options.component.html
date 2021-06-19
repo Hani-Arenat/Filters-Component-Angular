@@ -1,5 +1,6 @@
 <app-filter-option
   *ngFor="let option of filterOptions; let i = index"
   [filterOption]="option"
+  (click)="selectFilter(option)"
 >
 </app-filter-option>

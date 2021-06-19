@@ -11,6 +11,8 @@ import { FilterPopupOptionsComponent } from './components/filter-popup-options/f
 import { FilterOptionComponent } from './components/filter-option/filter-option.component';
 import { AppliedFiltersComponent } from './components/applied-filters/applied-filters.component';
 
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './store/store';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,8 @@ import { AppliedFiltersComponent } from './components/applied-filters/applied-fi
     AppliedFiltersComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    StoreModule.forRoot({myReducer: reducer})
   ],
   providers: [],
   bootstrap: [AppComponent]
