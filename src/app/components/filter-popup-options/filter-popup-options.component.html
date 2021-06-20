@@ -1,6 +1,18 @@
-<app-filter-option
-  *ngFor="let option of filterOptions; let i = index"
-  [filterOption]="option"
-  (click)="selectFilter(option)"
->
-</app-filter-option>
+<ng-container>
+  <app-filter-option
+    *ngFor="let option of filterOptions"
+    [filterOption]="option"
+    [currentFilterSelections]="currentFilterSelections"
+    (toggleFilterSelection)="toggleFilterSelection($event)"
+  >
+  </app-filter-option>
+  <div class="popup-action-btns-wrapper">
+    <button
+      (click)="handleUnselectAll()"
+      *ngIf="currentFilterSelections.length"
+    >
+      Cancel
+    </button>
+    <button class="apply-btn" (click)="handleApplySelections()">Apply</button>
+  </div>
+</ng-container>

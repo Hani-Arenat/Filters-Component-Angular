@@ -1,8 +1,29 @@
-<li class="list-item" [ngClass]="{ 'list-item-arrow': filterName === 'color' }">
-  {{ filterName }}
+<li
+  [id]="filterName + '-nav-filters'"
+  class="list-item"
+  [ngClass]="{
+    'list-item-arrow': showPopupValue(),
+    highlight: showPopupValue() || getSelectionCount()
+  }"
+>
+  {{
+    filterName +
+      (getSelectionCount() > 0 ? " (" + getSelectionCount() + ")" : "")
+  }}
   <app-filter-popup-options
     [filterName]="filterName"
     [filterOptions]="filterOptions"
-    *ngIf="filterName === 'color'"
+    *ngIf="showPopupValue()"
   ></app-filter-popup-options>
+
+  <!-- <div *ngIf="showPopupValue()">
+    <ng-container *ngIf="moreFilters; else elseTemplate"> </ng-container>
+    <ng-template #elseTemplate>
+      <app-filter-popup-options
+        [filterName]="filterName"
+        [filterOptions]="filterOptions"
+        *ngIf="showPopupValue()"
+      ></app-filter-popup-options>
+    </ng-template>
+  </div> -->
 </li>

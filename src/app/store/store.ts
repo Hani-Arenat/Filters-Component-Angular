@@ -24,14 +24,11 @@ export interface PayloadData {
 }
 
 export function reducer(state: AllFilters = initState, action: Payload) {
-  console.log('state >>', state)
-  console.log('action >>', action)
   switch (action.type) {
     case SELECT_FILTER:
       let _state: AllFilters = { ...state };
-      _state[action.payload.filterName] = action.payload.filterSelections
-
-      console.log('>>', _state)
+      // debugger
+      _state[action.payload.filterName] = [...action.payload.filterSelections]
       return _state;
 
     case UNSELECT_FILTER:
@@ -42,10 +39,10 @@ export function reducer(state: AllFilters = initState, action: Payload) {
 
       return __state;
 
-    /* case UNSELECT_ALL_FOR_FILTER:
-         let currentState = { ...state };
-         delete currentState[action.payload.data.filterName];
-         return currentState;*/
+    case UNSELECT_ALL_FOR_FILTER:
+      let currentState = { ...state };
+      delete currentState[action.payload.filterName];
+      return currentState;
 
     case UNSELECT_ALL_FILTERS:
       return {};

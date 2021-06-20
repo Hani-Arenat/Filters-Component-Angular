@@ -3,7 +3,6 @@
   top: 140%;
   left: 0px;
   width: 280px;
-  min-height: 180px;
   border: 1px solid #bcbcbc;
   z-index: 10;
   padding: 8px;
@@ -14,12 +13,31 @@
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
-}
-@media (max-width: 768px) {
-  :host {
+
+  @media (max-width: 768px) {
     width: 100% !important;
     box-sizing: border-box;
     top: 93% !important;
     padding: 8px;
+  }
+}
+
+.popup-action-btns-wrapper {
+  display: flex;
+  flex-wrap: no-wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 25px;
+
+  button {
+    cursor: pointer;
+    border: 1px solid #545454;
+    border-radius: 4px;
+    padding: 2px 15px;
+  }
+
+  .apply-btn {
+    margin-left: auto;
   }
 }
