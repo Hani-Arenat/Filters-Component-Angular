@@ -7,19 +7,29 @@ import { FilterOptions } from '../home/home.component';
   encapsulation: ViewEncapsulation.None
 })
 export class NavFiltersComponent {
-  @Input() filterOptions?: FilterOptions
+  @Input() filterOptions?: FilterOptions;
 
   constructor() { }
 
-  getRestOfFilters(filters: FilterOptions) {
+  getRestOfFilters() {
     let restFilters: FilterOptions = {};
-    const keys = Object.keys(filters);
-    keys.forEach((el, index) => {
-      if (index > 1) {
-        restFilters[el] = filters[el];
-      }
-    });
+    if (this.filterOptions) {
+      const keys = Object.keys(this.filterOptions);
+      keys.forEach((el, index) => {
+        if (index > 1 && this.filterOptions) {
+          restFilters[el] = this.filterOptions[el];
+        }
+      });
+    }
     return restFilters;
   };
+
+  showMoreFilters() {
+    if (this.filterOptions) {
+      return Object.keys(this.filterOptions).length > 2
+    }else{
+      return 0
+    }
+  }
 
 }

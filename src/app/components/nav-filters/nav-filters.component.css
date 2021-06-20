@@ -46,8 +46,7 @@
     position: static;
     margin: 8px 4px;
   }
-
   .nav-items-wrapper li:nth-of-type(1n + 3) {
-    display: none;
+    display: none !important;
   }
 }

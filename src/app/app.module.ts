@@ -15,6 +15,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducer } from './store/store';
 import { MoreFiltersListComponent } from './components/more-filters-list/more-filters-list.component';
 import { DropDownItemComponent } from './components/drop-down-item/drop-down-item.component';
+import { MoreFiltersComponent } from './components/more-filters/more-filters.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +28,8 @@ import { DropDownItemComponent } from './components/drop-down-item/drop-down-ite
     FilterOptionComponent,
     AppliedFiltersComponent,
     MoreFiltersListComponent,
-    DropDownItemComponent
+    DropDownItemComponent,
+    MoreFiltersComponent
   ],
   imports: [
     BrowserModule,

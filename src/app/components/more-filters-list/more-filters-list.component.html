@@ -1,5 +1,7 @@
 <div class="popup-content-wrapper">
-  <ng-container *ngFor="let item of moreFilters">
-    <app-drop-down-item> </app-drop-down-item>
-  </ng-container>
+  <!-- testtttt -->
+  <!-- <ng-container> -->
+    <app-drop-down-item *ngFor="let item of moreFilters| keyvalue" [filterName]="item.key" [filterOptions]="item.value">
+    </app-drop-down-item>
+  <!-- </ng-container> -->
 </div>

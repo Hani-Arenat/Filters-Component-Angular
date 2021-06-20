@@ -1,0 +1,9 @@
+.more-filters-wrapper {
+  display: none;
+}
+@media (max-width: 768px) {
+  .more-filters-wrapper {
+    display: block !important;
+    list-style: none;
+  }
+}

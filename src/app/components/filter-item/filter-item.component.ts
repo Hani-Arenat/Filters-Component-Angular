@@ -25,43 +25,42 @@ export class FilterItemComponent implements OnInit {
   @Input() filterName: string = '';
   @Input() filterOptions?: FilterObject[]
   @Input() moreFilters?: any
-  count: number = 0
-  private currentFilterSelections: any = [];
 
-  private wasInside = false;
+  selectionCount: number = 0
+  private showPopup = false;
 
   @HostListener('click', ['$event'])
   clickInside($event: any) {
     console.log("clicked inside");
-    this.wasInside = true;
+    this.showPopup = true;
     $event.stopPropagation();
   }
 
   @HostListener('document:click', ['$event'])
   clickout($event: any) {
-    if (!this.wasInside) {
+    if (!this.showPopup) {
       console.log("clicked outside");
       $event.stopPropagation();
     }
-    this.wasInside = false;
+    this.showPopup = false;
   }
 
-  constructor(private store: Store<StoreInterface>) { }
+  constructor(private store: Store<StoreInterface>) {
+
+  }
   showPopupValue() {
-    return this.wasInside
+    return this.showPopup
   }
   ngOnInit(): void {
-    console.log('ngOnInit.......')
     this.store.subscribe(data => {
       let _data: any = { ...data.myReducer }
-      this.count = _data[this.filterName]?.length
-      debugger
+      this.selectionCount = _data[this.filterName]?.length
     })
 
   }
 
   getSelectionCount() {
-    return this.count
+    return this.selectionCount
   }
 
 }

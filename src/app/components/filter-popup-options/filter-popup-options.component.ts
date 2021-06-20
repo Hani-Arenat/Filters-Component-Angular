@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FilterObject } from '../home/home.component';
 interface StoreInterface {
@@ -24,7 +24,12 @@ export interface FilterOption {
 export class FilterPopupOptionsComponent implements OnInit {
   @Input() filterName: string = ''
   @Input() filterOptions?: FilterObject[]
+  @Input() position?: string = ''
 
+  @HostBinding('class.postion-relative')
+  get getPosition() {
+    return this.position === 'relative'
+  }
   currentFilterSelections: any = [];
   // allAppliedFilters: any = {};
   constructor(private store: Store<StoreInterface>) {
