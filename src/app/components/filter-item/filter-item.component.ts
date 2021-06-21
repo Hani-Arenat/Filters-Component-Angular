@@ -1,21 +1,7 @@
-import { Component, Input, OnInit, HostListener } from '@angular/core';
+import { Component, Input, OnInit, HostListener, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { FilterObject } from '../home/home.component';
-interface StoreInterface {
-  myReducer: AllSelectedFilters
-}
+import * as Models from '../../store/models'
 
-export interface AllSelectedFilters {
-  allSelectedFilters: AllFilters | null
-}
-
-export interface AllFilters {
-  [key: string]: FilterOption[]
-}
-export interface FilterOption {
-  id: string,
-  title: string,
-}
 @Component({
   selector: 'app-filter-item',
   templateUrl: './filter-item.component.html',
@@ -23,46 +9,49 @@ export interface FilterOption {
 })
 export class FilterItemComponent implements OnInit {
   @Input() filterName: string = '';
-  @Input() filterOptions?: FilterObject[]
+  @Input() filterOptions?: Models.FilterObject[]
   @Input() moreFilters?: any
-
   selectionCount: number = 0
   private showPopup = false;
 
-  @HostListener('click', ['$event'])
-  clickInside($event: any) {
-    console.log("clicked inside");
-    this.showPopup = true;
-    $event.stopPropagation();
-  }
+  constructor(private _eref: ElementRef, private store: Store<Models.StoreInterface>) {
 
-  @HostListener('document:click', ['$event'])
-  clickout($event: any) {
-    if (!this.showPopup) {
-      console.log("clicked outside");
-      $event.stopPropagation();
-    }
-    this.showPopup = false;
-  }
-
-  constructor(private store: Store<StoreInterface>) {
-
-  }
-  showPopupValue() {
-    return this.showPopup
   }
   ngOnInit(): void {
     this.store.subscribe(data => {
       let _data: any = { ...data.myReducer }
-      this.selectionCount = _data[this.filterName]?.length
-    })
+      if (this.filterName === 'More Filters') {
+        let _count = 0;
+        const keys = Object.keys(this.moreFilters);
+        keys.forEach((el) => {
+          if (_data[el]) {
+            _count += _data[el].length;
+          }
+        })
+        this.selectionCount = _count
+      } else {
+        this.selectionCount = _data[this.filterName]?.length
 
+      }
+    })
+  }
+  @HostListener('click')
+  clickInside() {
+    this.showPopup = !this.showPopup;
   }
 
+  @HostListener('document:click', ['$event'])
+  clickout(event: any) {
+    if (!this._eref.nativeElement.contains(event.target)) {
+      this.showPopup = false;
+    }
+  }
+  showPopupValue() {
+    return this.showPopup
+  }
   getSelectionCount() {
     return this.selectionCount
   }
-
 }
 
 

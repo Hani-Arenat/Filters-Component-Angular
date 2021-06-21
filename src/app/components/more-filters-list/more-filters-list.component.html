@@ -1,7 +1,8 @@
-<div class="popup-content-wrapper">
-  <!-- testtttt -->
-  <!-- <ng-container> -->
-    <app-drop-down-item *ngFor="let item of moreFilters| keyvalue" [filterName]="item.key" [filterOptions]="item.value">
-    </app-drop-down-item>
-  <!-- </ng-container> -->
+<div class="popup-content-wrapper" (click)="preventClick($event)">
+  <app-drop-down-item
+    *ngFor="let item of moreFilters | keyvalue"
+    [filterName]="item.key"
+    [filterOptions]="item.value"
+  >
+  </app-drop-down-item>
 </div>

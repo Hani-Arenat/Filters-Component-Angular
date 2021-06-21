@@ -1,22 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
-
-interface StoreInterface {
-  myReducer: AllSelectedFilters
-}
-
-export interface AllSelectedFilters {
-  [x: string]: any;
-  allSelectedFilters: AllFilters | null
-}
-
-export interface AllFilters {
-  [key: string]: FilterOption[]
-}
-export interface FilterOption {
-  id: string,
-  title: string,
-}
+import { UNSELECT_FILTER, UNSELECT_ALL_FILTERS } from '../../store/actions';
+import * as Models from '../../store/models'
 @Component({
   selector: 'app-applied-filters',
   templateUrl: './applied-filters.component.html',
@@ -26,11 +11,11 @@ export interface FilterOption {
 
 export class AppliedFiltersComponent implements OnInit {
   appliedFilters: any = [];
-  constructor(private store: Store<StoreInterface>) {
+  constructor(private store: Store<Models.StoreInterface>) {
     this.store.subscribe(data => {
       this.appliedFilters = []
       Object.entries(data.myReducer).map(([key, value]) => {
-        return value.map((filter: FilterOption) => {
+        return value.map((filter: Models.FilterOption) => {
           this.appliedFilters.push({
             id: filter.id,
             title: filter.title,
@@ -49,7 +34,7 @@ export class AppliedFiltersComponent implements OnInit {
   handleUnSelectFilter(id: any, name: any) {
     this.store.dispatch(
       {
-        type: 'UNSELECT_FILTER',
+        type: UNSELECT_FILTER,
         payload: {
           filterId: id,
           filterName: name,
@@ -59,7 +44,7 @@ export class AppliedFiltersComponent implements OnInit {
   }
   clearAllFilters() {
     this.store.dispatch({
-      type: 'UNSELECT_ALL_FILTERS'
+      type: UNSELECT_ALL_FILTERS
     });
   }
 }

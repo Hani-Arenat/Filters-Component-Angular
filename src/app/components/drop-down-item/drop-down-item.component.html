@@ -1,8 +1,16 @@
 <div class="collapsible-element-wrapper">
-  <button class="collapsible-element-btn-wrapper" [ngClass]="{'active': showContent}" (click)="handleShowContent()">
-    {{filterName}}
+  <button
+    class="collapsible-element-btn-wrapper"
+    [ngClass]="{ active: showContent }"
+    (click)="handleShowContent()"
+  >
+    {{ filterName + (selectionCount > 0 ? " (" + selectionCount + ")" : "") }}
   </button>
   <div *ngIf="showContent">
-    <app-filter-popup-options [position]="'relative'" [filterName]="filterName" [filterOptions]="filterOptions"></app-filter-popup-options>
+    <app-filter-popup-options
+      [position]="'relative'"
+      [filterName]="filterName"
+      [filterOptions]="filterOptions"
+    ></app-filter-popup-options>
   </div>
 </div>

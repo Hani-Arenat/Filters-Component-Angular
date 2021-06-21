@@ -33,7 +33,7 @@ import { MoreFiltersComponent } from './components/more-filters/more-filters.com
   ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot({myReducer: reducer})
+    StoreModule.forRoot({ myReducer: reducer })
   ],
   providers: [],
   bootstrap: [AppComponent]

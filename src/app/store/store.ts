@@ -1,37 +1,16 @@
-import { Action, ActionReducer } from "@ngrx/store";
-import * as FiltersActions from "./filters.actions";
-export const SELECT_FILTER = "SELECT_FILTER";
-export const UNSELECT_FILTER = "UNSELECT_FILTER"
-export const UNSELECT_ALL_FOR_FILTER = "UNSELECT_ALL_FOR_FILTER"
-export const UNSELECT_ALL_FILTERS = "UNSELECT_ALL_FILTERS"
+import * as Actions from './actions'
+import * as Models from './models'
 
 let initState = {}
 
-export interface AllFilters {
-  [key: string]: FilterOption[]
-}
-export interface FilterOption {
-  id: string,
-  title: string,
-}
-
-export interface Payload {
-  type: string,
-  payload?: number | undefined | any
-}
-export interface PayloadData {
-  [key: string]: string | FilterOption[]
-}
-
-export function reducer(state: AllFilters = initState, action: Payload) {
+export function reducer(state: Models.AllFilters = initState, action: Models.Payload) {
   switch (action.type) {
-    case SELECT_FILTER:
-      let _state: AllFilters = { ...state };
-      // debugger
+    case Actions.SELECT_FILTER:
+      let _state: Models.AllFilters = { ...state };
       _state[action.payload.filterName] = [...action.payload.filterSelections]
       return _state;
 
-    case UNSELECT_FILTER:
+    case Actions.UNSELECT_FILTER:
       let __state = { ...state };
       __state[action.payload.filterName] = __state[
         action.payload.filterName
@@ -39,12 +18,12 @@ export function reducer(state: AllFilters = initState, action: Payload) {
 
       return __state;
 
-    case UNSELECT_ALL_FOR_FILTER:
+    case Actions.UNSELECT_ALL_FOR_FILTER:
       let currentState = { ...state };
       delete currentState[action.payload.filterName];
       return currentState;
 
-    case UNSELECT_ALL_FILTERS:
+    case Actions.UNSELECT_ALL_FILTERS:
       return {};
     default:
       return state;

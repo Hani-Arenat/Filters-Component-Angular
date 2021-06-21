@@ -1,15 +1,21 @@
 <div class="applied-filters-wrapper">
-  <h4>Applied Filters: </h4>
+  <h4>Applied Filters:</h4>
 
-  <ng-container *ngIf="isAppliedFiltersEmpty();else none_content">
+  <ng-container *ngIf="isAppliedFiltersEmpty(); else none_content">
     <div class="selected-filters-wrapper">
-        <div class="selected-filter-wrapper" *ngFor="let filter of appliedFilters">
-          <span>{{filter.title}}</span>
-          <span (click)="handleUnSelectFilter(filter.id, filter.filterName)" class="close-icon">
-            &#x2716;
-          </span>
-        </div>
-      <div class="selected-filter-wrapper" (click)="clearAllFilters()">
+      <div
+        class="selected-filter-wrapper"
+        *ngFor="let filter of appliedFilters"
+      >
+        <span>{{ filter.title }}</span>
+        <span
+          (click)="handleUnSelectFilter(filter.id, filter.filterName)"
+          class="close-icon"
+        >
+          &#x2716;
+        </span>
+      </div>
+      <div class="clear-all-btn" (click)="clearAllFilters()">
         <span>Clear All</span>
       </div>
     </div>
@@ -17,6 +23,4 @@
   <ng-template #none_content>
     <h4>-none-</h4>
   </ng-template>
-
-
 </div>

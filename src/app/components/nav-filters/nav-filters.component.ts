@@ -1,18 +1,19 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, OnInit } from '@angular/core';
 import { FilterOptions } from '../home/home.component';
 @Component({
   selector: 'app-nav-filters',
   templateUrl: './nav-filters.component.html',
-  styleUrls: ['./nav-filters.component.css'],
+  styleUrls: ['./nav-filters.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class NavFiltersComponent {
+export class NavFiltersComponent implements OnInit {
   @Input() filterOptions?: FilterOptions;
-
+  filtersData: any;
   constructor() { }
-
+  ngOnInit(): void {
+  }
   getRestOfFilters() {
-    let restFilters: FilterOptions = {};
+    let restFilters: any = {};
     if (this.filterOptions) {
       const keys = Object.keys(this.filterOptions);
       keys.forEach((el, index) => {
@@ -27,9 +28,12 @@ export class NavFiltersComponent {
   showMoreFilters() {
     if (this.filterOptions) {
       return Object.keys(this.filterOptions).length > 2
-    }else{
-      return 0
+    } else {
+      return false
     }
+  }
+  originalOrder(a: any, b: any) {
+    return a;
   }
 
 }

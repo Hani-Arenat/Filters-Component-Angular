@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, SimpleChanges, OnChanges, HostBinding } from '@angular/core';
-import { FilterObject } from '../home/home.component';
+import * as Models from '../../store/models'
 
 @Component({
   selector: 'app-filter-option',
@@ -7,7 +7,7 @@ import { FilterObject } from '../home/home.component';
   styleUrls: ['./filter-option.component.css']
 })
 export class FilterOptionComponent implements OnInit, OnChanges {
-  @Input() filterOption?: FilterObject
+  @Input() filterOption?: Models.FilterObject
   @Input() currentFilterSelections: any
   @Output() toggleFilterSelection: EventEmitter<any> = new EventEmitter()
 

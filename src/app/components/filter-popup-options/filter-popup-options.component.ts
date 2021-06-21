@@ -1,6 +1,7 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, HostListener, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FilterObject } from '../home/home.component';
+import { SELECT_FILTER, UNSELECT_ALL_FOR_FILTER } from '../../store/actions'
 interface StoreInterface {
   myReducer: AllSelectedFilters
 }
@@ -30,19 +31,19 @@ export class FilterPopupOptionsComponent implements OnInit {
   get getPosition() {
     return this.position === 'relative'
   }
+  @HostListener("click", ["$event"])
+  onClick(event: any): void {
+    event.stopPropagation();
+  }
   currentFilterSelections: any = [];
-  // allAppliedFilters: any = {};
   constructor(private store: Store<StoreInterface>) {
 
   }
 
   ngOnInit(): void {
-    console.log('ngOnInit.......')
     this.store.subscribe(data => {
-      // debugger
-      // this.allAppliedFilters = { ...data.myReducer }
       this.currentFilterSelections = []
-      Object.entries(data.myReducer).map(([key, value]: any) => {
+      Object.entries(data.myReducer).map(([key, value, index]: any) => {
         return value.map((filter: FilterOption) => {
           if (this.filterName === key) {
             this.currentFilterSelections.push({
@@ -50,12 +51,16 @@ export class FilterPopupOptionsComponent implements OnInit {
               title: filter.title,
               filterName: key
             })
-          } else {
-            this.currentFilterSelections = []
+          }
+          if (this.filterName === 'More Filters' && index > 1) {
+            this.currentFilterSelections.push({
+              id: filter.id,
+              title: filter.title,
+              filterName: key
+            })
           }
         })
       })
-      console.log('ngOnInit currentFilterSelections....>', this.currentFilterSelections)
 
     })
 
@@ -64,7 +69,7 @@ export class FilterPopupOptionsComponent implements OnInit {
   handleApplySelections() {
     this.store.dispatch(
       {
-        type: 'SELECT_FILTER',
+        type: SELECT_FILTER,
         payload: {
           filterName: this.filterName,
           filterSelections: [...this.currentFilterSelections],
@@ -74,7 +79,7 @@ export class FilterPopupOptionsComponent implements OnInit {
   }
   handleUnselectAll() {
     this.store.dispatch({
-      type: 'UNSELECT_ALL_FOR_FILTER',
+      type: UNSELECT_ALL_FOR_FILTER,
       payload: {
         filterName: this.filterName
       }
