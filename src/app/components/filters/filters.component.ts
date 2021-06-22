@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { FilterOptions } from '../home/home.component';
+import * as Models from '../../store/models'
+
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.css']
 })
 export class FiltersComponent {
-  @Input() filterOptions?: FilterOptions
+  @Input() filterOptions?: Models.FilterOptions
   constructor() { }
 
 

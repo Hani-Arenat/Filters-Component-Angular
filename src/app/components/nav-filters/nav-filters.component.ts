@@ -1,5 +1,6 @@
 import { Component, Input, ViewEncapsulation, OnInit } from '@angular/core';
-import { FilterOptions } from '../home/home.component';
+import * as Models from '../../store/models'
+
 @Component({
   selector: 'app-nav-filters',
   templateUrl: './nav-filters.component.html',
@@ -7,7 +8,7 @@ import { FilterOptions } from '../home/home.component';
   encapsulation: ViewEncapsulation.None
 })
 export class NavFiltersComponent implements OnInit {
-  @Input() filterOptions?: FilterOptions;
+  @Input() filterOptions?: Models.FilterOptions;
   filtersData: any;
   constructor() { }
   ngOnInit(): void {

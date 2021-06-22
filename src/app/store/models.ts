@@ -24,3 +24,6 @@ export interface FilterObject {
   id: string,
   title: string,
 }
+export interface FilterOptions {
+  [key: string]: FilterObject[]
+}

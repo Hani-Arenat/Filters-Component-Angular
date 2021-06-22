@@ -1,12 +1,5 @@
 import { Component } from '@angular/core';
-
-export interface FilterOptions {
-  [key: string]: FilterObject[]
-}
-export interface FilterObject {
-  id: string,
-  title: string,
-}
+import * as Models from '../../store/models'
 
 @Component({
   selector: 'app-home',
@@ -14,7 +7,7 @@ export interface FilterObject {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  filterOptions: FilterOptions = {
+  filterOptions: Models.FilterOptions = {
     size: [
       {
         id: "2x3",

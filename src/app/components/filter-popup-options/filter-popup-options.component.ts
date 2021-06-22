@@ -1,22 +1,7 @@
 import { Component, HostBinding, HostListener, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { FilterObject } from '../home/home.component';
 import { SELECT_FILTER, UNSELECT_ALL_FOR_FILTER } from '../../store/actions'
-interface StoreInterface {
-  myReducer: AllSelectedFilters
-}
-
-export interface AllSelectedFilters {
-  allSelectedFilters: AllFilters | null
-}
-
-export interface AllFilters {
-  [key: string]: FilterOption[]
-}
-export interface FilterOption {
-  id: string,
-  title: string,
-}
+import * as Models from '../../store/models'
 @Component({
   selector: 'app-filter-popup-options',
   templateUrl: './filter-popup-options.component.html',
@@ -24,7 +9,7 @@ export interface FilterOption {
 })
 export class FilterPopupOptionsComponent implements OnInit {
   @Input() filterName: string = ''
-  @Input() filterOptions?: FilterObject[]
+  @Input() filterOptions?: Models.FilterObject[]
   @Input() position?: string = ''
 
   @HostBinding('class.postion-relative')
@@ -36,7 +21,7 @@ export class FilterPopupOptionsComponent implements OnInit {
     event.stopPropagation();
   }
   currentFilterSelections: any = [];
-  constructor(private store: Store<StoreInterface>) {
+  constructor(private store: Store<Models.StoreInterface>) {
 
   }
 
@@ -44,7 +29,7 @@ export class FilterPopupOptionsComponent implements OnInit {
     this.store.subscribe(data => {
       this.currentFilterSelections = []
       Object.entries(data.myReducer).map(([key, value, index]: any) => {
-        return value.map((filter: FilterOption) => {
+        return value.map((filter: Models.FilterOption) => {
           if (this.filterName === key) {
             this.currentFilterSelections.push({
               id: filter.id,
