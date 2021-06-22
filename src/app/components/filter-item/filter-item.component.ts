@@ -19,7 +19,7 @@ export class FilterItemComponent implements OnInit {
   }
   ngOnInit(): void {
     this.store.subscribe(data => {
-      let _data: any = { ...data.myReducer }
+      let _data: any = { ...data?.myReducer?.all }
       if (this.filterName === 'More Filters') {
         let _count = 0;
         const keys = Object.keys(this.moreFilters);

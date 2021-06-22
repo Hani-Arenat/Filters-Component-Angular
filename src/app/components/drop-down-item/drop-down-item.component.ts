@@ -19,7 +19,7 @@ export class DropDownItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.subscribe(data => {
-      let _data: any = { ...data.myReducer }
+      let _data: any = { ...data?.myReducer?.all }
       this.selectionCount = _data[this.filterName]?.length
     })
   }

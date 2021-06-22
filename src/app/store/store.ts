@@ -1,26 +1,28 @@
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as Actions from './actions'
 import * as Models from './models'
 
-let initState = {}
+let initState = {
+  all: {},
+  customer: {}
+}
 
-export function reducer(state: Models.AllFilters = initState, action: Models.Payload) {
+export function reducer(state: Models.StoreInterface = initState, action: Models.Payload) {
   switch (action.type) {
     case Actions.SELECT_FILTER:
-      let _state: Models.AllFilters = { ...state };
-      _state[action.payload.filterName] = [...action.payload.filterSelections]
-      return _state;
+      return { ...state, all: { ...state.all, [action.payload.filterName]: [...action.payload.filterSelections] } };
 
     case Actions.UNSELECT_FILTER:
-      let __state = { ...state };
-      __state[action.payload.filterName] = __state[
+      let __state = JSON.parse(JSON.stringify(state));
+      __state['all'][action.payload.filterName] = __state['all'][
         action.payload.filterName
-      ].filter((el) => el.id !== action.payload.filterId);
+      ].filter((el: any) => el.id !== action.payload.filterId);
 
       return __state;
 
     case Actions.UNSELECT_ALL_FOR_FILTER:
-      let currentState = { ...state };
-      delete currentState[action.payload.filterName];
+      let currentState = JSON.parse(JSON.stringify(state));
+      delete currentState['all'][action.payload.filterName];
       return currentState;
 
     case Actions.UNSELECT_ALL_FILTERS:
@@ -29,3 +31,9 @@ export function reducer(state: Models.AllFilters = initState, action: Models.Pay
       return state;
   }
 };
+
+
+// Selectors
+
+let allFS = createFeatureSelector<Models.StoreInterface>('all')
+export let allSelector = createSelector(allFS, state => state?.all)

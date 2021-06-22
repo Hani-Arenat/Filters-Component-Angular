@@ -28,24 +28,26 @@ export class FilterPopupOptionsComponent implements OnInit {
   ngOnInit(): void {
     this.store.subscribe(data => {
       this.currentFilterSelections = []
-      Object.entries(data.myReducer).map(([key, value, index]: any) => {
-        return value.map((filter: Models.FilterOption) => {
-          if (this.filterName === key) {
-            this.currentFilterSelections.push({
-              id: filter.id,
-              title: filter.title,
-              filterName: key
-            })
-          }
-          if (this.filterName === 'More Filters' && index > 1) {
-            this.currentFilterSelections.push({
-              id: filter.id,
-              title: filter.title,
-              filterName: key
-            })
-          }
+      if (data.myReducer.all) {
+        Object.entries(data.myReducer?.all).map(([key, value, index]: any) => {
+          return value.map((filter: Models.FilterOption) => {
+            if (this.filterName === key) {
+              this.currentFilterSelections.push({
+                id: filter.id,
+                title: filter.title,
+                filterName: key
+              })
+            }
+            if (this.filterName === 'More Filters' && index > 1) {
+              this.currentFilterSelections.push({
+                id: filter.id,
+                title: filter.title,
+                filterName: key
+              })
+            }
+          })
         })
-      })
+      }
 
     })
 
