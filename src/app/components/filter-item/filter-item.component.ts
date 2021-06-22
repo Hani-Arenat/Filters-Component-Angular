@@ -9,7 +9,7 @@ import * as Models from '../../store/models'
 })
 export class FilterItemComponent implements OnInit {
   @Input() filterName: string = '';
-  @Input() filterOptions?: Models.FilterObject[]
+  @Input() filterOptions?: Models.FilterOption[]
   @Input() moreFilters?: any
   selectionCount: number = 0
   private showPopup = false;

@@ -9,7 +9,7 @@ import * as Models from '../../store/models'
 })
 export class FilterPopupOptionsComponent implements OnInit {
   @Input() filterName: string = ''
-  @Input() filterOptions?: Models.FilterObject[]
+  @Input() filterOptions?: Models.FilterOption[]
   @Input() position?: string = ''
 
   @HostBinding('class.postion-relative')

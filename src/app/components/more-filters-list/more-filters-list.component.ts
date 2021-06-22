@@ -6,7 +6,7 @@ import * as Models from '../../store/models'
   styleUrls: ['./more-filters-list.component.scss']
 })
 export class MoreFiltersListComponent {
-  @Input() moreFilters?: Models.FilterObject[]
+  @Input() moreFilters?: Models.FilterOption[]
   constructor() { }
 
   preventClick(e: any) {

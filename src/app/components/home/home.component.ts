@@ -7,7 +7,7 @@ import * as Models from '../../store/models'
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  filterOptions: Models.FilterOptions = {
+  filterOptions: Models.AllFilters = {
     size: [
       {
         id: "2x3",

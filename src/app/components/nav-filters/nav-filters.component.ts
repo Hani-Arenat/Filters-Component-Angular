@@ -8,7 +8,7 @@ import * as Models from '../../store/models'
   encapsulation: ViewEncapsulation.None
 })
 export class NavFiltersComponent implements OnInit {
-  @Input() filterOptions?: Models.FilterOptions;
+  @Input() filterOptions?: Models.AllFilters;
   filtersData: any;
   constructor() { }
   ngOnInit(): void {

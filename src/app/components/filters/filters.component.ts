@@ -7,7 +7,7 @@ import * as Models from '../../store/models'
   styleUrls: ['./filters.component.css']
 })
 export class FiltersComponent {
-  @Input() filterOptions?: Models.FilterOptions
+  @Input() filterOptions?: Models.AllFilters
   constructor() { }
 
 

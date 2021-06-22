@@ -1,3 +1,6 @@
+export interface StoreInterface {
+  [key: string]: AllFilters
+}
 export interface AllFilters {
   [key: string]: FilterOption[]
 }
@@ -11,19 +14,4 @@ export interface Payload {
 }
 export interface PayloadData {
   [key: string]: string | FilterOption[]
-}
-export interface StoreInterface {
-  myReducer: AllSelectedFilters
-}
-
-export interface AllSelectedFilters {
-  [x: string]: any;
-  allSelectedFilters: AllFilters | null
-}
-export interface FilterObject {
-  id: string,
-  title: string,
-}
-export interface FilterOptions {
-  [key: string]: FilterObject[]
 }

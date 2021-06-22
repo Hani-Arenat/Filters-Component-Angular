@@ -7,7 +7,7 @@ import * as Models from '../../store/models'
   styleUrls: ['./filter-option.component.css']
 })
 export class FilterOptionComponent implements OnInit, OnChanges {
-  @Input() filterOption?: Models.FilterObject
+  @Input() filterOption?: Models.FilterOption
   @Input() currentFilterSelections: any
   @Output() toggleFilterSelection: EventEmitter<any> = new EventEmitter()
 
