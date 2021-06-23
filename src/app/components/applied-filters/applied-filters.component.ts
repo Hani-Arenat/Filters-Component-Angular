@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { allSelector } from 'src/app/store/store';
-import { UNSELECT_FILTER, UNSELECT_ALL_FILTERS } from '../../store/actions';
+import { UNSELECT_FILTER, UNSELECT_ALL_FILTERS, unSelectFilter, unSelectAllFilter } from '../../store/actions';
 import * as Models from '../../store/models'
 @Component({
   selector: 'app-applied-filters',
@@ -12,12 +13,15 @@ import * as Models from '../../store/models'
 
 export class AppliedFiltersComponent implements OnInit {
   appliedFilters: any = [];
+  // @ts-expect-error
+  spinner$: Observable<any>;
+
   constructor(private store: Store<Models.StoreInterface>) {
-    this.store.select(allSelector).subscribe(data => {
+    this.store.subscribe(data => {
       this.appliedFilters = []
-      debugger
-      // let _data: any = { ...data?.myReducer?.all }
-      Object.entries(data).map(([key, value]) => {
+      let _data: any = { ...data?.myReducer?.all }
+      Object.entries(_data).map(([key, value]) => {
+        // @ts-expect-error
         return value.map((filter: Models.FilterOption) => {
           this.appliedFilters.push({
             id: filter.id,
@@ -30,24 +34,16 @@ export class AppliedFiltersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.spinner$ = this.store.pipe(select(allSelector))
   }
   isAppliedFiltersEmpty() {
     return this.appliedFilters.length
   }
   handleUnSelectFilter(id: any, name: any) {
-    this.store.dispatch(
-      {
-        type: UNSELECT_FILTER,
-        payload: {
-          filterId: id,
-          filterName: name,
-        }
-      }
-    );
+    this.store.dispatch(unSelectFilter({ filterId: id, filterName: name }))
   }
   clearAllFilters() {
-    this.store.dispatch({
-      type: UNSELECT_ALL_FILTERS
-    });
+    this.store.dispatch(unSelectAllFilter())
+
   }
 }

@@ -1,6 +1,6 @@
 import { Component, HostBinding, HostListener, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { SELECT_FILTER, UNSELECT_ALL_FOR_FILTER } from '../../store/actions'
+import { selectFilter, SELECT_FILTER, UNSELECT_ALL_FOR_FILTER } from '../../store/actions'
 import * as Models from '../../store/models'
 @Component({
   selector: 'app-filter-popup-options',
@@ -54,7 +54,7 @@ export class FilterPopupOptionsComponent implements OnInit {
   }
 
   handleApplySelections() {
-    this.store.dispatch(
+    /* this.store.dispatch(
       {
         type: SELECT_FILTER,
         payload: {
@@ -62,7 +62,12 @@ export class FilterPopupOptionsComponent implements OnInit {
           filterSelections: [...this.currentFilterSelections],
         }
       }
-    );
+    ); */
+    this.store.dispatch(selectFilter({
+      filterName: this.filterName,
+      filterSelections: [...this.currentFilterSelections],
+    }))
+
   }
   handleUnselectAll() {
     this.store.dispatch({

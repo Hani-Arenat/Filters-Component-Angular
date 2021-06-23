@@ -22,11 +22,17 @@ export function reducer(state: Models.StoreInterface = initState, action: Models
 
     case Actions.UNSELECT_ALL_FOR_FILTER:
       let currentState = JSON.parse(JSON.stringify(state));
-      delete currentState['all'][action.payload.filterName];
+      if (currentState['all'][action.payload.filterName]) {
+        delete currentState['all'][action.payload.filterName];
+      }
       return currentState;
 
     case Actions.UNSELECT_ALL_FILTERS:
       return {};
+
+    case 'SET_FILTERS':
+      console.log('Store HERE >>', action.payload)
+      return state;
     default:
       return state;
   }
@@ -36,4 +42,4 @@ export function reducer(state: Models.StoreInterface = initState, action: Models
 // Selectors
 
 let allFS = createFeatureSelector<Models.StoreInterface>('all')
-export let allSelector = createSelector(allFS, state => state?.all)
+export let allSelector = createSelector(allFS, (state: Models.StoreInterface) => state.all)

@@ -5,10 +5,11 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class FiltersService {
+export class PostService {
   private baseUrl = 'https://jsonplaceholder.typicode.com/posts';
-  constructor(private apiProvider: HttpClient) { }
+  constructor(private http: HttpClient) { }
+
   getFilters(): Observable<any> {
-    return this.apiProvider.get(this.baseUrl)
+    return this.http.get(this.baseUrl)
   }
 }

@@ -16,6 +16,12 @@ import { reducer } from './store/store';
 import { MoreFiltersListComponent } from './components/more-filters-list/more-filters-list.component';
 import { DropDownItemComponent } from './components/drop-down-item/drop-down-item.component';
 import { MoreFiltersComponent } from './components/more-filters/more-filters.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './routes/app-routing.module';
+import { PostsComponent } from './components/posts/posts.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { PostsEffects } from './store/effects';
+import { EffectsModule } from '@ngrx/effects';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,11 +35,16 @@ import { MoreFiltersComponent } from './components/more-filters/more-filters.com
     AppliedFiltersComponent,
     MoreFiltersListComponent,
     DropDownItemComponent,
-    MoreFiltersComponent
+    MoreFiltersComponent,
+    PostsComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot({ myReducer: reducer })
+    HttpClientModule,
+    StoreModule.forRoot({ myReducer: reducer }),
+    EffectsModule.forRoot([PostsEffects]),
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

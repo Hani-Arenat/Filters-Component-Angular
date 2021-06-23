@@ -3,3 +3,18 @@
   height: 80px;
   display: block;
 }
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 25px;
+}
+
+.header-container a:first-child {
+  margin-right: 25px;
+}
+
+.header-container a {
+  color: black;
+  font-weight: bold;
+}
