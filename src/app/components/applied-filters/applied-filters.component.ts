@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { allSelector } from 'src/app/store/store';
-import { UNSELECT_FILTER, UNSELECT_ALL_FILTERS, unSelectFilter, unSelectAllFilter } from '../../store/actions';
-import * as Models from '../../store/models'
+import { unSelectFilter, unSelectAllFilter } from '../../store/filters.actions';
+import * as Models from '../../store/filters.models'
+import { getAllFilters } from '../../store/filters.selectors'
 @Component({
   selector: 'app-applied-filters',
   templateUrl: './applied-filters.component.html',
@@ -13,34 +12,33 @@ import * as Models from '../../store/models'
 
 export class AppliedFiltersComponent implements OnInit {
   appliedFilters: any = [];
-  // @ts-expect-error
-  spinner$: Observable<any>;
 
-  constructor(private store: Store<Models.StoreInterface>) {
-    this.store.subscribe(data => {
-      this.appliedFilters = []
-      let _data: any = { ...data?.myReducer?.all }
-      Object.entries(_data).map(([key, value]) => {
-        // @ts-expect-error
-        return value.map((filter: Models.FilterOption) => {
-          this.appliedFilters.push({
-            id: filter.id,
-            title: filter.title,
-            filterName: key
-          })
-        })
-      })
-    })
-  }
+  constructor(private store: Store<Models.StoreInterface>) { }
 
   ngOnInit(): void {
-    this.spinner$ = this.store.pipe(select(allSelector))
+    this.store.pipe(select(getAllFilters)).subscribe(
+      (data: any) => {
+        console.log('watch >>', data) //your data shows here
+        this.appliedFilters = []
+        if (!data || !Object.keys(data)) return;
+
+        Object.entries(data).map(([key, value]) => {
+          // @ts-expect-error
+          return value.map((filter: Models.FilterOption) => {
+            this.appliedFilters.push({
+              id: filter.id,
+              title: filter.title,
+              filterName: key
+            })
+          })
+        })
+      });
   }
   isAppliedFiltersEmpty() {
     return this.appliedFilters.length
   }
   handleUnSelectFilter(id: any, name: any) {
-    this.store.dispatch(unSelectFilter({ filterId: id, filterName: name }))
+    this.store.dispatch(unSelectFilter({ payload: { filterId: id, filterName: name } }))
   }
   clearAllFilters() {
     this.store.dispatch(unSelectAllFilter())

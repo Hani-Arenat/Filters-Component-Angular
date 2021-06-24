@@ -1,7 +1,8 @@
 import { Component, HostBinding, HostListener, Input, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { selectFilter, SELECT_FILTER, UNSELECT_ALL_FOR_FILTER } from '../../store/actions'
-import * as Models from '../../store/models'
+import { select, Store } from '@ngrx/store';
+import { getAllFilters } from '../../store/filters.selectors';
+import { selectFilter, unSelectAllForFilter } from '../../store/filters.actions'
+import * as Models from '../../store/filters.models'
 @Component({
   selector: 'app-filter-popup-options',
   templateUrl: './filter-popup-options.component.html',
@@ -11,6 +12,7 @@ export class FilterPopupOptionsComponent implements OnInit {
   @Input() filterName: string = ''
   @Input() filterOptions?: Models.FilterOption[]
   @Input() position?: string = ''
+  currentFilterSelections: any = [];
 
   @HostBinding('class.postion-relative')
   get getPosition() {
@@ -20,63 +22,51 @@ export class FilterPopupOptionsComponent implements OnInit {
   onClick(event: any): void {
     event.stopPropagation();
   }
-  currentFilterSelections: any = [];
+
   constructor(private store: Store<Models.StoreInterface>) {
 
   }
 
   ngOnInit(): void {
-    this.store.subscribe(data => {
+    this.store.pipe(select(getAllFilters)).subscribe(data => {
+      if (!data || !Object.keys(data)) return;
       this.currentFilterSelections = []
-      if (data.myReducer.all) {
-        Object.entries(data.myReducer?.all).map(([key, value, index]: any) => {
-          return value.map((filter: Models.FilterOption) => {
-            if (this.filterName === key) {
-              this.currentFilterSelections.push({
-                id: filter.id,
-                title: filter.title,
-                filterName: key
-              })
-            }
-            if (this.filterName === 'More Filters' && index > 1) {
-              this.currentFilterSelections.push({
-                id: filter.id,
-                title: filter.title,
-                filterName: key
-              })
-            }
-          })
+      Object.entries(data).map(([key, value, index]: any) => {
+        return value.map((filter: Models.FilterOption) => {
+          if (this.filterName === key) {
+            this.currentFilterSelections.push({
+              id: filter.id,
+              title: filter.title,
+              filterName: key
+            })
+          }
+          if (this.filterName === 'More Filters' && index > 1) {
+            this.currentFilterSelections.push({
+              id: filter.id,
+              title: filter.title,
+              filterName: key
+            })
+          }
         })
-      }
-
+      })
     })
-
   }
 
   handleApplySelections() {
-    /* this.store.dispatch(
-      {
-        type: SELECT_FILTER,
-        payload: {
-          filterName: this.filterName,
-          filterSelections: [...this.currentFilterSelections],
-        }
-      }
-    ); */
     this.store.dispatch(selectFilter({
-      filterName: this.filterName,
-      filterSelections: [...this.currentFilterSelections],
+      payload: {
+        filterName: this.filterName,
+        filterSelections: [...this.currentFilterSelections],
+      }
     }))
 
   }
   handleUnselectAll() {
-    this.store.dispatch({
-      type: UNSELECT_ALL_FOR_FILTER,
+    this.store.dispatch(unSelectAllForFilter({
       payload: {
-        filterName: this.filterName
+        filterName: this.filterName,
       }
-    }
-    );
+    }))
     this.currentFilterSelections = []
   }
   toggleFilterSelection(filterInfo: any) {

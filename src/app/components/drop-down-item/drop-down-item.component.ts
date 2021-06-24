@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as Models from '../../store/models'
+import * as Models from '../../store/filters.models'
 
 @Component({
   selector: 'app-drop-down-item',

@@ -1,5 +1,5 @@
 import { Component, Input, ViewEncapsulation, OnInit } from '@angular/core';
-import * as Models from '../../store/models'
+import * as Models from '../../store/filters.models'
 
 @Component({
   selector: 'app-nav-filters',

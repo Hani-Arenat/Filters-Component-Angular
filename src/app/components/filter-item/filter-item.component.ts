@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, HostListener, ElementRef } from '@angular/core';
-import { Store } from '@ngrx/store';
-import * as Models from '../../store/models'
+import { select, Store } from '@ngrx/store';
+import { getAllFilters } from 'src/app/store/filters.selectors';
+import * as Models from '../../store/filters.models'
 
 @Component({
   selector: 'app-filter-item',
@@ -18,19 +19,20 @@ export class FilterItemComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.store.subscribe(data => {
-      let _data: any = { ...data?.myReducer?.all }
+    this.store.pipe(select(getAllFilters)).subscribe((data: any) => {
+      this.selectionCount = 0
+      if (!data || !Object.keys(data)) return;
       if (this.filterName === 'More Filters') {
         let _count = 0;
         const keys = Object.keys(this.moreFilters);
         keys.forEach((el) => {
-          if (_data[el]) {
-            _count += _data[el].length;
+          if (data[el]) {
+            _count += data[el].length;
           }
         })
         this.selectionCount = _count
       } else {
-        this.selectionCount = _data[this.filterName]?.length
+        this.selectionCount = data[this.filterName]?.length
 
       }
     })

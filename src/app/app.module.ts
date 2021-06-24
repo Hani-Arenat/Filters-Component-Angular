@@ -20,7 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './routes/app-routing.module';
 import { PostsComponent } from './components/posts/posts.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { PostsEffects } from './store/effects';
+import { PostsEffects } from './store/filters.effects';
 import { EffectsModule } from '@ngrx/effects';
 @NgModule({
   declarations: [
@@ -42,7 +42,7 @@ import { EffectsModule } from '@ngrx/effects';
   imports: [
     BrowserModule,
     HttpClientModule,
-    StoreModule.forRoot({ myReducer: reducer }),
+    StoreModule.forRoot({ reducer }),
     EffectsModule.forRoot([PostsEffects]),
     AppRoutingModule
   ],

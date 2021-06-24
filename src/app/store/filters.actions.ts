@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { PayloadData } from "./models";
+import * as Models from "./filters.models";
 
 
 export const SELECT_FILTER = "SELECT_FILTER";
@@ -11,11 +11,10 @@ export const SET_FILTERS = 'SET_FILTERS'
 
 export const getFilters = createAction(GET_FILTERS)
 
-export const unSelectFilter = createAction(UNSELECT_FILTER, props<PayloadData>())
+export const unSelectFilter = createAction(UNSELECT_FILTER, props<Models.PayloadProps>())
 
 export const unSelectAllFilter = createAction(UNSELECT_ALL_FILTERS)
 
-export const selectFilter = createAction(SELECT_FILTER, props<any>())
+export const selectFilter = createAction(SELECT_FILTER, props<Models.PayloadProps>())
 
-// export const getFilters = createAction(GET_FILTERS)
-// export const getFilters = createAction(GET_FILTERS)
+export const unSelectAllForFilter = createAction(UNSELECT_ALL_FOR_FILTER, props<Models.PayloadProps>())

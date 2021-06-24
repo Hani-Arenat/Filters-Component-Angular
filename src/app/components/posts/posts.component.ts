@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { PostService } from 'src/services/posts.service';
-import { getFilters } from 'src/app/store/actions';
+import { getFilters } from 'src/app/store/filters.actions';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',

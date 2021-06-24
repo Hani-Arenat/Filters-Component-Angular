@@ -1,16 +1,23 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import * as Actions from './actions'
-import * as Models from './models'
+import * as Actions from './filters.actions'
+import * as Models from './filters.models'
 
 let initState = {
   all: {},
-  customer: {}
+  customer: {
+    test: [{ id: '1', title: 'title_1' }]
+  }
 }
 
 export function reducer(state: Models.StoreInterface = initState, action: Models.Payload) {
   switch (action.type) {
     case Actions.SELECT_FILTER:
-      return { ...state, all: { ...state.all, [action.payload.filterName]: [...action.payload.filterSelections] } };
+      let _state = JSON.parse(JSON.stringify(state));
+      if (!_state.all) {
+        _state.all = {}
+      }
+      _state.all = { ..._state.all, [action.payload.filterName]: [...action.payload.filterSelections] }
+      return _state
+    //{ ...state, all: { ...state.all, [action.payload.filterName]: [...action.payload.filterSelections] } };
 
     case Actions.UNSELECT_FILTER:
       let __state = JSON.parse(JSON.stringify(state));
@@ -31,7 +38,7 @@ export function reducer(state: Models.StoreInterface = initState, action: Models
       return {};
 
     case 'SET_FILTERS':
-      console.log('Store HERE >>', action.payload)
+      // Effects Action
       return state;
     default:
       return state;
@@ -39,7 +46,4 @@ export function reducer(state: Models.StoreInterface = initState, action: Models
 };
 
 
-// Selectors
 
-let allFS = createFeatureSelector<Models.StoreInterface>('all')
-export let allSelector = createSelector(allFS, (state: Models.StoreInterface) => state.all)

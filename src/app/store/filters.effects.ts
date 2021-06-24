@@ -4,7 +4,7 @@ import { createEffect, Actions, ofType } from "@ngrx/effects";
 import { mergeMap, map, catchError } from 'rxjs/operators'
 import { of } from 'rxjs'
 import { PostService } from "src/services/posts.service";
-import { GET_FILTERS, SET_FILTERS } from './actions'
+import { GET_FILTERS, SET_FILTERS } from './filters.actions'
 
 class AllOk {
   type: string = 'OK';

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import * as Models from '../../store/models'
+import * as Models from '../../store/filters.models'
 @Component({
   selector: 'app-more-filters-list',
   templateUrl: './more-filters-list.component.html',
